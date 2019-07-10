@@ -2,7 +2,7 @@
 
 Elixir language have standard `String.Chars` protocol which describes `T -> String` relation (like Haskell [Show](https://www.haskell.org/haddock/libraries/GHC.Show.html) type class). But Elixir don't have any standard protocol for `String -> T` relation (some equivalent of Haskell [Read](https://www.haskell.org/haddock/libraries/GHC.Read.html) type class). But I think such protocol completely make sense.
 
-This protocol defines read relation between 2 types. Instance of type `B` can be read from instance of type `A`. Usually type `A = String`, but this implementation don't have this constraint.
+This protocol describes read relation between 2 types. Instance of type `B` can be read from instance of type `A`. Usually type `A = String`, but this implementation don't have this constraint.
 
 <img src="priv/img/logo.png" width="300"/>
 
