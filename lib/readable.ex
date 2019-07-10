@@ -1,18 +1,16 @@
-defmodule Readable do
+defprotocol Readable do
   @moduledoc """
-  Documentation for Readable.
+  Protocol which describes type convertion a -> b.
+  Usually `@type a :: String.t()` but there is no
+  any artificial restriction regarding type a.
   """
+
+  @type t :: Readable.t()
 
   @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Readable.hello()
-      :world
-
+  Accepts struct with field :data and type pair information in structure name
+  and returns value of target type or raise exception.
   """
-  def hello do
-    :world
-  end
+  @spec read(t) :: term
+  def read(t)
 end

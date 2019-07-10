@@ -1,8 +1,5 @@
 defmodule ReadableTest do
   use ExUnit.Case
+  doctest Read
   doctest Readable
-
-  test "greets the world" do
-    assert Readable.hello() == :world
-  end
 end
