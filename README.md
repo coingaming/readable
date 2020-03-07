@@ -18,6 +18,13 @@ end
 defreadable URI, from: x :: BitString do
   URI.parse(x)
 end
+
+defreadable NaiveDateTime, from: x :: Tuple do
+  case NaiveDateTime.from_erl(x) do
+    {:ok, y} -> y
+    {:error, _} -> fail!(x)
+  end
+end
 ```
 
 and then we can use implementation of `Read` type class
@@ -37,6 +44,12 @@ iex> Read.read("https://hello.world", URI)
   scheme: "https",
   userinfo: nil
 }
+
+iex> Read.read({{2000, 1, 1}, {13, 30, 15}}, NaiveDateTime)
+~N[2000-01-01 13:30:15]
+
+iex> Read.read({{2000, 13, 1}, {13, 30, 15}}, NaiveDateTime)
+** (Readable.Exception) NaiveDateTime can not be read from {{2000, 13, 1}, {13, 30, 15}}
 
 iex> Read.read("https://hello.world", TypeNotExist)
 ** (ArgumentError) argument error

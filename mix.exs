@@ -7,7 +7,7 @@ defmodule Readable.MixProject do
       version: "VERSION" |> File.read!() |> String.trim(),
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
-      consolidate_protocols: Mix.env() != :test,
+      consolidate_protocols: not (Mix.env() in [:dev, :test]),
       deps: deps(),
       aliases: aliases(),
       # excoveralls
