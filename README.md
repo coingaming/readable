@@ -65,7 +65,7 @@ The package can be installed by adding `readable` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:readable, "~> 0.1.0"}
+    {:readable, "~> 0.2"}
   ]
 end
 ```
