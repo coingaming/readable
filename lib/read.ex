@@ -32,6 +32,22 @@ defmodule Read do
     scheme: "https",
     userinfo: nil
   }
+
+  iex> quote do
+  ...>   import Read
+  ...>   defreadable NaiveDateTime, from: x :: Tuple do
+  ...>     case NaiveDateTime.from_erl(x) do
+  ...>       {:ok, y} -> y
+  ...>       {:error, _} -> fail!(x)
+  ...>     end
+  ...>   end
+  ...> end
+  ...> |> Code.compile_quoted
+  iex> import Read
+  iex> read({{2000, 1, 1}, {13, 30, 15}}, NaiveDateTime)
+  ~N[2000-01-01 13:30:15]
+  iex> read({{2000, 13, 1}, {13, 30, 15}}, NaiveDateTime)
+  ** (Readable.Exception) NaiveDateTime can not be read from {{2000, 13, 1}, {13, 30, 15}}
   ```
   """
   defmacro defreadable(
@@ -55,6 +71,20 @@ defmodule Read do
       end
 
       defimpl Readable, for: unquote(type) do
+        defp fail(x) do
+          %Readable.Exception{
+            message:
+              unquote("#{inspect(to_type)} can not be read from ") <>
+                inspect(x)
+          }
+        end
+
+        defp fail!(x) do
+          x
+          |> fail()
+          |> raise()
+        end
+
         def read(%unquote(type){data: unquote(quoted_from_expression)}) do
           unquote(code)
         end
