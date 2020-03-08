@@ -58,6 +58,21 @@ iex> Read.read("https://hello.world", TypeNotExist)
     (readable) lib/read.ex:84: Read.read/2
 ```
 
+Also there is strict macro version of helper which checks existence of target type in compile-time:
+
+```elixir
+iex> import Read
+Read
+iex> mk_read("123", Integer)
+123
+iex> mk_read("123", TypeNotExist)
+** (UndefinedFunctionError) function TypeNotExist.__struct__/0 is undefined (module
+ TypeNotExist is not available)
+    TypeNotExist.__struct__()
+    (typable 0.3.0) lib/typable.ex:94: Type.assert_exist!/1
+    (readable 0.2.1) expanding macro: Read.mk_read/2
+```
+
 ## Installation
 
 The package can be installed by adding `readable` to your list of dependencies in `mix.exs`:
@@ -65,7 +80,7 @@ The package can be installed by adding `readable` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:readable, "~> 0.2"}
+    {:readable, "~> 0.3"}
   ]
 end
 ```

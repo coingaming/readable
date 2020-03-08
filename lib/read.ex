@@ -116,4 +116,31 @@ defmodule Read do
     %{__struct__: type, data: from_expression}
     |> Readable.read()
   end
+
+  @doc """
+  Strict macro helper to read expression into given type.
+  Returns compile-time error if target type does not exist.
+
+  ## Examples
+
+  ```
+  iex> import Read
+  iex> mk_read("123", Integer)
+  123
+  iex> quote do
+  ...>   import Read
+  ...>   mk_read("123", TypeNotExist)
+  ...> end
+  ...> |> Code.eval_quoted()
+  ** (UndefinedFunctionError) function TypeNotExist.__struct__/0 is undefined (module TypeNotExist is not available)
+  ```
+  """
+  defmacro mk_read(from_expression, quoted_to_type) do
+    {to_type, []} = Code.eval_quoted(quoted_to_type, [], __CALLER__)
+    :ok = Type.assert_exist!(to_type)
+
+    quote location: :keep do
+      Read.read(unquote(from_expression), unquote(to_type))
+    end
+  end
 end
