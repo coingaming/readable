@@ -1,5 +1,9 @@
 # Changelog
 
+## [v0.2.1](https://github.com/coingaming/readable/tree/v0.2.1) (2020-03-07)
+
+[Full Changelog](https://github.com/coingaming/readable/compare/v0.2.0...v0.2.1)
+
 ## [v0.2.0](https://github.com/coingaming/readable/tree/v0.2.0) (2020-03-07)
 
 [Full Changelog](https://github.com/coingaming/readable/compare/v0.1.0...v0.2.0)
